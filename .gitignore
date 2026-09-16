@@ -1,0 +1,20 @@
+# Xcode
+build/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+*.xcuserdatad/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/project.xcworkspace/
+.DS_Store
+
+# CocoaPods
+Pods/
+
+# Build products
+*.app
+*.dSYM.zip
+*.dSYM
+
+# CocoaPods artifacts
+Podfile.lock
