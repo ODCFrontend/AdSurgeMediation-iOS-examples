@@ -1,9 +1,9 @@
 #import "UnifiedInterstitialViewController.h"
-#import <TANMobSDK/TANMobSDK.h>
+#import <AdSurgeMediationSDK/AdSurgeMediationSDK.h>
 
 @interface UnifiedInterstitialViewController () <
-    TANUnifiedInterstitialAdDelegate>
-@property(nonatomic, strong) TANUnifiedInterstitialAd *interstitial;
+    AdSurgeMediationUnifiedInterstitialAdDelegate>
+@property(nonatomic, strong) AdSurgeMediationUnifiedInterstitialAd *interstitial;
 @property(weak, nonatomic) IBOutlet UILabel *interstitialStateLabel;
 @property(weak, nonatomic) IBOutlet UITextField *positionID;
 @property(nonatomic, weak) IBOutlet UILabel *adValidLabel;
@@ -58,7 +58,7 @@ static NSString *INTERSTITIAL_STATE_TEXT = @"UnifiedInterstitial Ad Status";
     ? self.positionID.text
     : self.positionID.placeholder;
     self.interstitial =
-    [[TANUnifiedInterstitialAd alloc] initWithPlacementId:placmentId];
+    [[AdSurgeMediationUnifiedInterstitialAd alloc] initWithPlacementId:placmentId];
     self.interstitial.delegate = self;
     NSLog(@"[AdSurgeMediation_INFO] the interstitial Ad is start to load.");
     [self.interstitial loadAd];
@@ -66,7 +66,7 @@ static NSString *INTERSTITIAL_STATE_TEXT = @"UnifiedInterstitial Ad Status";
 
 - (IBAction)showAd:(id)sender {
     if (!self.interstitial) {
-        [self.logTable addLogWithInfo:@"Show failed:" ad:nil error:[TANAdErrors errorWithCode:-1 description:@"Please load AD"] status:AdStatusError s2sResult:nil];
+        [self.logTable addLogWithInfo:@"Show failed:" ad:nil error:[AdSurgeMediationAdErrors errorWithCode:-1 description:@"Please load AD"] status:AdStatusError s2sResult:nil];
         return;
     }
     if ([self.interstitial showAdFromRootViewController:self]) {
@@ -87,14 +87,14 @@ static NSString *INTERSTITIAL_STATE_TEXT = @"UnifiedInterstitial Ad Status";
     return @"1000148";
 }
 
-#pragma mark - TANUnifiedInterstitialAdDelegate
+#pragma mark - AdSurgeMediationUnifiedInterstitialAdDelegate
 
 /**
  *  Callback for successful preloading of interstitial ads
  *  This function is called when the advertisement data returned by the
  * receiving server is successfully received
  */
-- (void)unifiedInterstitialSuccessToLoadAd:(TANAd *)ad {
+- (void)unifiedInterstitialSuccessToLoadAd:(AdSurgeMediationAd *)ad {
     self.interstitialStateLabel.text =
     [NSString stringWithFormat:@"%@:%@ %@", INTERSTITIAL_STATE_TEXT,
      [ad getNetworkName], @"Load Success."];
@@ -113,7 +113,7 @@ static NSString *INTERSTITIAL_STATE_TEXT = @"UnifiedInterstitial Ad Status";
  *   This function is called when the advertisement data returned by the
  * receiving server fails
  */
-- (void)unifiedInterstitialFailToLoadAd:(TANAd *)ad error:(NSError *)error {
+- (void)unifiedInterstitialFailToLoadAd:(AdSurgeMediationAd *)ad error:(NSError *)error {
     NSLog(@"[AdSurgeMediation_INFO] The interstitial Ad load fail: %@.",
           [error localizedDescription]);
     self.interstitialStateLabel.text =
@@ -128,7 +128,7 @@ static NSString *INTERSTITIAL_STATE_TEXT = @"UnifiedInterstitial Ad Status";
              s2sResult:nil];
 }
 
-- (void)unifiedInterstitialFailToShowAd:(TANAd *)ad error:(NSError *)error {
+- (void)unifiedInterstitialFailToShowAd:(AdSurgeMediationAd *)ad error:(NSError *)error {
     NSLog(@"[AdSurgeMediation_INFO] The interstitial Ad show fail: %@.",
           [error localizedDescription]);
     self.interstitialStateLabel.text =
@@ -146,7 +146,7 @@ static NSString *INTERSTITIAL_STATE_TEXT = @"UnifiedInterstitial Ad Status";
 /**
  *  Interstitial AD exposure pullback
  */
-- (void)unifiedInterstitialWillExposure:(TANAd *)ad {
+- (void)unifiedInterstitialWillExposure:(AdSurgeMediationAd *)ad {
     NSLog(@"[AdSurgeMediation_INFO] The interstitial Ad will expose.");
     [self.logTable addLogWithInfo:@"Ad exposed"
                                ad:ad
@@ -158,7 +158,7 @@ static NSString *INTERSTITIAL_STATE_TEXT = @"UnifiedInterstitial Ad Status";
 /**
  *  Click callback for interstitial ads
  */
-- (void)unifiedInterstitialClicked:(TANAd *)ad {
+- (void)unifiedInterstitialClicked:(AdSurgeMediationAd *)ad {
     NSLog(@"[AdSurgeMediation_INFO] The interstitial Ad did clicked.");
     [self.logTable addLogWithInfo:@"Ad clicked"
                                ad:ad
@@ -170,7 +170,7 @@ static NSString *INTERSTITIAL_STATE_TEXT = @"UnifiedInterstitial Ad Status";
 /**
  *  The full-screen advertisement page has been closed
  */
-- (void)unifiedInterstitialAdDidClose:(TANAd *)ad {
+- (void)unifiedInterstitialAdDidClose:(AdSurgeMediationAd *)ad {
     NSLog(@"[AdSurgeMediation_INFO] The interstitial Ad did closed.");
     [self.logTable addLogWithInfo:@"Ad did closed"
                                ad:ad

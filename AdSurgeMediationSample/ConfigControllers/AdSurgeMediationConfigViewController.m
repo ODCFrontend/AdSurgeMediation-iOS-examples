@@ -1,5 +1,5 @@
 #import "AdSurgeMediationConfigViewController.h"
-#import <TANMobSDK/TANMobSDK.h>
+#import <AdSurgeMediationSDK/AdSurgeMediationSDK.h>
 #import "UIAlertController+AdSurgeMediationMultiLineTextInput.h"
 
 @interface AdSurgeMediationConfigViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -57,7 +57,7 @@
 
 - (void)uploadAttributionInfoStr {
     UIAlertController *alertController = [UIAlertController showMultiLineTextInputWithTitle:@"Upload Attribution Info" completion:^(NSString *text) {
-            [TANSDKConfig uploadAttributionInfoStr:text];
+            [AdSurgeMediationSDKConfig uploadAttributionInfoStr:text];
         }];
     
     [self presentViewController:alertController animated:YES completion:nil];

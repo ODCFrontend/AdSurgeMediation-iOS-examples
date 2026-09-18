@@ -1,9 +1,9 @@
 #import "UnifiedBannerViewController.h"
-#import <TANMobSDK/TANMobSDK.h>
+#import <AdSurgeMediationSDK/AdSurgeMediationSDK.h>
 #import "AdSurgeMediationAppDelegate.h"
 
-@interface UnifiedBannerViewController () <TANUnifiedBannerAdViewDelegate>
-@property (nonatomic, strong) TANUnifiedBannerAdView *bannerView;
+@interface UnifiedBannerViewController () <AdSurgeMediationUnifiedBannerAdViewDelegate>
+@property (nonatomic, strong) AdSurgeMediationUnifiedBannerAdView *bannerView;
 
 @property (weak, nonatomic) IBOutlet UITextField *placementIdText;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
@@ -119,11 +119,11 @@
 }
 
 #pragma mark - property getter
-- (TANUnifiedBannerAdView *)bannerView
+- (AdSurgeMediationUnifiedBannerAdView *)bannerView
 {
     if (!_bannerView) {
         NSString *placementId = self.placementIdText.text.length > 0 ? self.placementIdText.text: self.placementIdText.placeholder;
-        _bannerView = [[TANUnifiedBannerAdView alloc] initWithAdUnitIdentifier:placementId];
+        _bannerView = [[AdSurgeMediationUnifiedBannerAdView alloc] initWithAdUnitIdentifier:placementId];
         _bannerView.delegate = self;
         _bannerView.translatesAutoresizingMaskIntoConstraints = NO;
     }
@@ -144,12 +144,12 @@
     ]];
 }
 
-#pragma mark - TANUnifiedBannerAdViewDelegate
+#pragma mark - AdSurgeMediationUnifiedBannerAdViewDelegate
 /**
  * It is called after the request for AD bar data is successful
  * This function is called when the advertisement data returned by the receiving server is successfully received
  */
-- (void)unifiedBannerViewDidLoad:(TANAd *)ad
+- (void)unifiedBannerViewDidLoad:(AdSurgeMediationAd *)ad
 {
     self.statusLabel.text = [NSString stringWithFormat:@"%@ ad load successful", [ad getNetworkName]];
     NSLog(@"[AdSurgeMediation_INFO] The banner Ad load was successful\n ad:%@", [ad description]);
@@ -160,14 +160,14 @@
  *  It is called after the request for AD bar data fails
  *   This function is called when the advertisement data returned by the receiving server fails
  */
-- (void)unifiedBannerViewFailedToLoad:(TANAd *)ad error:(NSError *)error
+- (void)unifiedBannerViewFailedToLoad:(AdSurgeMediationAd *)ad error:(NSError *)error
 {
     NSLog(@"[AdSurgeMediation_INFO] The banner Ad load fail: %@", [error localizedDescription]);
     self.statusLabel.text = [error localizedDescription];
     [self.logTable addLogWithInfo:[NSString stringWithFormat:@"%@%@", @"Load failed:", self.statusLabel.text] ad:ad error:error status:AdStatusError s2sResult:nil];
 }
 
-- (void)unifiedBannerViewFailedToShow:(TANAd *)ad error:(NSError *)error {
+- (void)unifiedBannerViewFailedToShow:(AdSurgeMediationAd *)ad error:(NSError *)error {
     NSLog(@"[AdSurgeMediation_INFO] The banner Ad show fail: %@", [error localizedDescription]);
     self.statusLabel.text = [error localizedDescription];
     [self.logTable addLogWithInfo:[NSString stringWithFormat:@"%@%@", @"Show failed:", self.statusLabel.text] ad:ad error:error status:AdStatusError s2sResult:nil];
@@ -176,7 +176,7 @@
 /**
  *  banner exposure pullback
  */
-- (void)unifiedBannerViewWillExpose:(TANAd *)ad {
+- (void)unifiedBannerViewWillExpose:(AdSurgeMediationAd *)ad {
     self.statusLabel.text = [NSString stringWithFormat:@"%@ ad exposed", [ad getNetworkName]];
     NSLog(@"[AdSurgeMediation_INFO] The banner Ad will expose.");
     [self.logTable addLogWithInfo:@"Ad exposed" ad:ad error:nil status:AdStatusShowing s2sResult:nil];
@@ -185,7 +185,7 @@
 /**
  *  banner click callback
  */
-- (void)unifiedBannerViewClicked:(TANAd *)ad
+- (void)unifiedBannerViewClicked:(AdSurgeMediationAd *)ad
 {
     self.statusLabel.text = [NSString stringWithFormat:@"%@ ad clicked", [ad getNetworkName]];
     NSLog(@"[AdSurgeMediation_INFO] The banner Ad did clicked.");

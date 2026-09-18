@@ -1,5 +1,5 @@
 #import "AdSurgeMediationAppDelegate.h"
-#import <TANMobSDK/TANMobSDK.h>
+#import <AdSurgeMediationSDK/AdSurgeMediationSDK.h>
 #import "AdSurgeMediationAdViewController.h"
 
 @implementation AdSurgeMediationAppDelegate
