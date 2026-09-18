@@ -22,14 +22,14 @@ platform :ios, '13.0'
 
 target 'AdSurgeMediationSample' do
   use_frameworks!
-  pod 'TANMobSDK', '1.7.1'
+  pod 'AdSurgeMediationSDK', '1.8.0'
 
-  pod 'AdSurgeMediationAdmobAdapter', '13.5.0.0'
-  pod 'AdSurgeMediationApplovinAdapter', '13.6.3.0'
-  pod 'AdSurgeMediationBigoAdapter', '5.2.1.0'
-  pod 'AdSurgeMediationInmobiAdapter', '11.3.0.0'
-  pod 'AdSurgeMediationLiftoffAdapter', '7.7.4.0'
-  pod 'AdSurgeMediationMetaAdapter', '6.21.1.0'
-  pod 'AdSurgeMediationMintegralAdapter', '8.1.4.0'
-  pod 'AdSurgeMediationPangleAdapter', '8.1.0.6.0'
+  pod 'AdSurgeMediationAdmobAdapter', '13.7.0.0'
+  pod 'AdSurgeMediationApplovinAdapter', '13.6.4.0'
+  pod 'AdSurgeMediationBigoAdapter', '5.3.0.0'
+  pod 'AdSurgeMediationInmobiAdapter', '11.4.1.0'
+  pod 'AdSurgeMediationLiftoffAdapter', '7.7.6.0'
+  pod 'AdSurgeMediationMetaAdapter', '6.22.0.0'
+  pod 'AdSurgeMediationMintegralAdapter', '8.1.6.0'
+  pod 'AdSurgeMediationPangleAdapter', '8.2.0.9.0'
 end

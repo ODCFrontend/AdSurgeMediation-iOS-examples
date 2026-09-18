@@ -1,11 +1,11 @@
 #import "RewardVideoViewController.h"
 #import "AdSurgeMediationAppDelegate.h"
-#import <TANMobSDK/TANMobSDK.h>
+#import <AdSurgeMediationSDK/AdSurgeMediationSDK.h>
 
 
-@interface RewardVideoViewController () <TANRewardedVideoAdDelegate, UITextFieldDelegate>
+@interface RewardVideoViewController () <AdSurgeMediationRewardedVideoAdDelegate, UITextFieldDelegate>
 
-@property (nonatomic, strong) TANRewardVideoAd *rewardVideoAd;
+@property (nonatomic, strong) AdSurgeMediationRewardVideoAd *rewardVideoAd;
 @property (weak, nonatomic) IBOutlet UITextField *placementIdTextField;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *validLabel;
@@ -48,7 +48,7 @@
     self.statusLabel.text = @"loading";
     self.validLabel.text = @"";
     NSString *placementId = self.placementIdTextField.text.length > 0 ?self.placementIdTextField.text: self.placementIdTextField.placeholder;
-    self.rewardVideoAd = [[TANRewardVideoAd alloc] initWithPlacementId:placementId];
+    self.rewardVideoAd = [[AdSurgeMediationRewardVideoAd alloc] initWithPlacementId:placementId];
     
     self.rewardVideoAd.delegate = self;
     NSLog(@"[AdSurgeMediation_INFO] the reward Ad is start to load");
@@ -57,7 +57,7 @@
 
 - (IBAction)playVideo:(UIButton *)sender {
     if (!self.rewardVideoAd) {
-        [self.logTable addLogWithInfo:@"Show failed:" ad:nil error:[TANAdErrors errorWithCode:-1 description:@"Please load AD"] status:AdStatusError s2sResult:nil];
+        [self.logTable addLogWithInfo:@"Show failed:" ad:nil error:[AdSurgeMediationAdErrors errorWithCode:-1 description:@"Please load AD"] status:AdStatusError s2sResult:nil];
         return;
     }
     if ([self.rewardVideoAd showAdFromRootViewController:self]) {
@@ -77,8 +77,8 @@
     NSLog(@"[AdSurgeMediation_INFO] the reward Ad %@", self.validLabel.text);
 }
 
-#pragma mark - TANRewardedVideoAdDelegate
-- (void)tan_rewardVideoAdDidLoad:(TANAd *)ad
+#pragma mark - AdSurgeMediationRewardedVideoAdDelegate
+- (void)adsurge_mediation_rewardVideoAdDidLoad:(AdSurgeMediationAd *)ad
 {
     self.statusLabel.text = [NSString stringWithFormat:@"%@ ad load successful", [ad getNetworkName]];
     NSLog(@"[AdSurgeMediation_INFO] The rewarded Ad load was successful\n ad:%@", [ad description]);
@@ -86,14 +86,14 @@
 }
 
 
-- (void)tan_rewardVideoAdDidExposed:(TANAd *)ad
+- (void)adsurge_mediation_rewardVideoAdDidExposed:(AdSurgeMediationAd *)ad
 {
     self.statusLabel.text = [NSString stringWithFormat:@"%@ ad exposed", [ad getNetworkName]];
     NSLog(@"[AdSurgeMediation_INFO] The rewarded Ad did exposed");
     [self.logTable addLogWithInfo:@"Ad exposed" ad:ad error:nil status:AdStatusShowing s2sResult:nil];
 }
 
-- (void)tan_rewardVideoAdDidClose:(TANAd *)ad
+- (void)adsurge_mediation_rewardVideoAdDidClose:(AdSurgeMediationAd *)ad
 {
     self.statusLabel.text = [NSString stringWithFormat:@"%@ ad closed", [ad getNetworkName]];
     NSLog(@"[AdSurgeMediation_INFO] The rewarded Ad did closed");
@@ -101,32 +101,32 @@
 }
 
 
-- (void)tan_rewardVideoAdDidClicked:(TANAd *)ad
+- (void)adsurge_mediation_rewardVideoAdDidClicked:(AdSurgeMediationAd *)ad
 {
     self.statusLabel.text = [NSString stringWithFormat:@"%@ ad clicked", [ad getNetworkName]];
     NSLog(@"[AdSurgeMediation_INFO] The rewarded Ad did clicked");
     [self.logTable addLogWithInfo:@"Ad clicked" ad:ad error:nil status:AdStatusClicked s2sResult:nil];
 }
 
-- (void)tan_rewardVideoAdFailToLoadAd:(TANAd *)ad error:(NSError *)error
+- (void)adsurge_mediation_rewardVideoAdFailToLoadAd:(AdSurgeMediationAd *)ad error:(NSError *)error
 {
     NSLog(@"[AdSurgeMediation_INFO] The rewarded Ad load fail: %@", [error localizedDescription]);
     self.statusLabel.text = [error localizedDescription];
     [self.logTable addLogWithInfo:[NSString stringWithFormat:@"%@%@", @"Load failed:", self.statusLabel.text] ad:ad error:error status:AdStatusError s2sResult:nil];
 }
 
-- (void)tan_rewardVideoAdFailToShowAd:(TANAd *)ad error:(NSError *)error {
+- (void)adsurge_mediation_rewardVideoAdFailToShowAd:(AdSurgeMediationAd *)ad error:(NSError *)error {
     self.statusLabel.text = [error localizedDescription];
     NSLog(@"[AdSurgeMediation_INFO] The rewarded Ad show fail: %@", [error localizedDescription]);
     [self.logTable addLogWithInfo:[NSString stringWithFormat:@"%@%@", @"Show failed:", self.statusLabel.text] ad:ad error:error status:AdStatusError s2sResult:nil];
 }
 
-- (void)tan_rewardVideoAdDidRewardEffective:(TANAd *)ad info:(NSDictionary *)info {
+- (void)adsurge_mediation_rewardVideoAdDidRewardEffective:(AdSurgeMediationAd *)ad info:(NSDictionary *)info {
     NSLog(@"[AdSurgeMediation_INFO] The rewarded Ad meets the reward condition, transid:%@", [info objectForKey:@"TAN_TRANS_ID"]);
     [self.logTable addLogWithInfo:@"Reward earned" ad:ad error:nil status:AdStatusSuccess s2sResult:nil];
 }
 
-- (void)tan_rewardVideoAdRewardEarnFailed:(TANAd *)ad error:(NSError *)error {
+- (void)adsurge_mediation_rewardVideoAdRewardEarnFailed:(AdSurgeMediationAd *)ad error:(NSError *)error {
     self.statusLabel.text = [error localizedDescription];
     NSLog(@"[AdSurgeMediation_INFO] The rewarded Ad reward earn failed: %@", [error localizedDescription]);
     [self.logTable addLogWithInfo:[NSString stringWithFormat:@"%@%@", @"Reward earn failed:", self.statusLabel.text] ad:ad error:error status:AdStatusError s2sResult:nil];

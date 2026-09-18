@@ -8,7 +8,7 @@ An official sample project for developers, demonstrating how to integrate the Ad
 - Rewarded video (`RewardVideoViewController`)
 - Interstitial (`UnifiedInterstitialViewController`)
 - Banner (320x50) / MREC (300x250) with runtime format switch (`UnifiedBannerViewController`)
-- Attribution info reporting (`TANSDKConfig uploadAttributionInfoStr:`, on `AdSurgeMediationConfigViewController`)
+- Attribution info reporting (`AdSurgeMediationSDKConfig uploadAttributionInfoStr:`, on `AdSurgeMediationConfigViewController`)
 - Integrated with AdMob as a sample ADN
 
 ## Project Structure
@@ -55,7 +55,7 @@ Fill in your own App ID and ad unit IDs (obtained from the AdSurgeMediation dash
 
 | Parameter | File | Location |
 |---|---|---|
-| App ID | `AdSurgeMediationAdViewController.m` | `[TANSDKConfig initWithAppId:@"..."]` |
+| App ID | `AdSurgeMediationAdViewController.m` | `[AdSurgeMediationSDKConfig initWithAppId:@"..."]` |
 | Rewarded ad unit ID | `AdSurgeMediationAds/AdSurgeMediationRewardVideoAd/RewardVideoViewController.xib` | text field `placeholder` |
 | Interstitial ad unit ID | `AdSurgeMediationAds/AdSurgeMediationUnifiedInterstitialAd/UnifiedInterstitialViewController.m` | `- (NSString *)mediationId` |
 | Banner (320x50) / MREC (300x250) ad unit ID | `AdSurgeMediationAds/AdSurgeMediationUnifiedBannerAd/UnifiedBannerViewController.m` | `- (NSString *)mediationId` |

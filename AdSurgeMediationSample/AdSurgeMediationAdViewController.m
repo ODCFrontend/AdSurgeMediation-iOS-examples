@@ -5,7 +5,7 @@
 #import "AdSurgeMediationConfigViewController.h"
 #import <AppTrackingTransparency/AppTrackingTransparency.h>
 #import <AdSupport/ASIdentifierManager.h>
-#import <TANMobSDK/TANMobSDK.h>
+#import <AdSurgeMediationSDK/AdSurgeMediationSDK.h>
 
 @interface AdSurgeMediationAdViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, assign) NSUInteger hiddenTag;
@@ -22,7 +22,7 @@
     [self.navLeftButton setTintColor:[UIColor whiteColor]];
     [self.navLeftButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
     self.navLeftButton.titleLabel.font = [UIFont systemFontOfSize:15];
-    [self.navLeftButton addTarget:self action:@selector(initTANSDK) forControlEvents:UIControlEventTouchUpInside];
+    [self.navLeftButton addTarget:self action:@selector(initAdSurgeMediationSDK) forControlEvents:UIControlEventTouchUpInside];
     self.navLeftButton.accessibilityIdentifier = @"Init_button";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navLeftButton];
     
@@ -35,7 +35,7 @@
     att.accessibilityIdentifier = @"ATT_button";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:att];
     
-    self.navigationItem.title = [NSString stringWithFormat:@"SDK Ver: %@",[TANSDKConfig sdkVersion]];
+    self.navigationItem.title = [NSString stringWithFormat:@"SDK Ver: %@",[AdSurgeMediationSDKConfig sdkVersion]];
     [self initData];
     [self.view addSubview:self.tableView];
     self.hiddenTag = 0;
@@ -67,7 +67,7 @@
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSString *advertisingIdentifier = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-                UIAlertController *alertController = [TANAlertPresenter showText:[NSString stringWithFormat:@"ATTrackingStatus: \n    %@\n\n IDFA: \n %@\n",statusString,advertisingIdentifier] withConfirmHandler:^(UIAlertAction * _Nonnull action) {
+                UIAlertController *alertController = [AdSurgeMediationAlertPresenter showText:[NSString stringWithFormat:@"ATTrackingStatus: \n    %@\n\n IDFA: \n %@\n",statusString,advertisingIdentifier] withConfirmHandler:^(UIAlertAction * _Nonnull action) {
                 }];
                 [self presentViewController:alertController animated:YES completion:nil];
             });
@@ -174,15 +174,15 @@
     return _tableView;
 }
 
-- (void)initTANSDK {
+- (void)initAdSurgeMediationSDK {
     // Initialize the SDK
-    BOOL result = [TANSDKConfig initWithAppId:@"2081917169595068416"];
+    BOOL result = [AdSurgeMediationSDKConfig initWithAppId:@"2081917169595068416"];
     if (result) {
         NSLog(@"[AdSurgeMediation_INFO] =====AdSurgeMediationSample initialized successfully=====");
     }
     // Start the SDK
     __weak typeof(self) weakSelf = self;
-    [TANSDKConfig startWithCompletionHandler:^(BOOL success, NSError *error) {
+    [AdSurgeMediationSDKConfig startWithCompletionHandler:^(BOOL success, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         dispatch_async(dispatch_get_main_queue(), ^{
             if (success) {
@@ -197,7 +197,7 @@
                     __strong typeof(weakSelf) strongSelf = weakSelf;
                     [strongSelf.navigationController popViewControllerAnimated:YES];
                 };
-                UIAlertController *alertController = [TANAlertPresenter showText: errormsg withConfirmHandler:confirmHandler];
+                UIAlertController *alertController = [AdSurgeMediationAlertPresenter showText: errormsg withConfirmHandler:confirmHandler];
                 [strongSelf presentViewController:alertController animated:YES completion:nil];
             }
         });
